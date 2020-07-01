@@ -1,0 +1,37 @@
+{
+  "name": "express-boilerplate",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
+    "connect-session-sequelize": "^7.0.0",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.3",
+    "ejs-layouts": "0.0.1",
+    "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.0",
+    "express-session": "^1.17.1",
+    "flash": "^1.1.0",
+    "helmet": "^3.23.3",
+    "lodash": "^4.17.15",
+    "morgan": "^1.10.0",
+    "n-api": "^1.2.43",
+    "node-pre-gyp": "^0.15.0",
+    "nvm": "0.0.4",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "pg": "^8.2.1",
+    "semver": "^7.3.2",
+    "sequelize": "^6.2.3",
+    "sequelize-cli": "^6.1.0"
+  },
+  "devDependencies": {},
+  "description": ""
+}
