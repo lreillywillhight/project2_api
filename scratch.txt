@@ -1,0 +1,50 @@
+comment
+___
+commenter_name: string,
+content: text,
+article_id: integer
+
+sequelize model:create --name comment --attributes commenter_name:string,content:text,article_id:integer
+
+
+USER
+--------
+id: PK,
+userName: string,
+email: string,
+password: string,
+
+
+favoritesSpaceX
+-----------------
+id: PK,
+user_id: FK,
+favoritesListSpaceX: ARRAY{string}
+
+
+favoritesReddits
+-----------------
+id: PK,
+user_id: FK,
+favoritesListReddits: ARRAY{string}
+
+
+favoritesImages
+-----------------
+id: PK,
+user_id: FK,
+favoritesListImages: ARRAY{string}
+
+
+favoritesNews
+-----------------
+id: PK,
+user_id: FK,
+favoritesListNews: ARRAY{string}
+
+
+newsLastViewed
+------------------
+id: PK,
+user_id: FK,
+newsLastViewed: string

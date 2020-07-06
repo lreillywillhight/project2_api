@@ -4,22 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style.css">
-    <title>Auth Boilerplate</title>
+    <title>SpaceX Tracker</title>
 </head>
 <body>
     <header>
         <nav class="navHeader">
             <% if (currentUser) { %>
+                <!-- !!! SETTINGS -->
                 <a href="/auth/logout">Logout</a>
                 <a href="/profile">Profile</a>
             <% } else { %>
                 <a href="/auth/register">Register</a>
                 <a href="/auth/login">Login</a>
             <% } %>
+            <!-- !!!
+            TITLE
+            ABOUT -->
         </nav>
     </header>
     <div class="container">
-        <h1>Authenticating Users</h1>
         <%- body %>
     </div>
 </body>
