@@ -17,7 +17,7 @@
             <a href=<%=headline.featured_image%>><img class="headlineImage" src= <%=headline.featured_image%> alt=<%=headline.title%>></a>
           </div>
           <div class="imageFollow">
-                <form action="/images/add" method="GET">
+                <form action="/images/add" method="POST">
                     <input name="imageUrl"
                     type="hidden" value=<%=headline.featured_image%>>
                     <input type="submit">

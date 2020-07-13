@@ -13,8 +13,10 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const axios = require('axios');
 const { sequelize } = require('./models');
 const { response } = require('express');
-// app setup
+const methodOverride = require('method-override');
 const app = Express()
+// app setup
+app.use(methodOverride('_method'));
 app.use(Express.urlencoded({ extended: false }))
 app.use(Express.static(__dirname + "/public"))
 app.set('view engine', 'ejs')
@@ -70,15 +72,6 @@ app.get('/profile', isLoggedIn, function (req, res) {
     res.render('profile')
 })
 
-// app.get('/picOTDay', function (req, res) {
-//     var imgUrl = 'https://apod.nasa.gov/apod/'
-//     axios.get(imgUrl).then(apiResponse => {
-//         var imgResult = apiResponse.data
-//         // console.log(imgResult)
-//         res.render('potd', { imgResult: imgResult })
-//     })
-// })
-
 app.get('/upcoming', function (req, res) {
     var upcomingUrl = 'https://api.spacexdata.com/v4/launches/upcoming'
     axios.get(upcomingUrl).then(apiResponse => {
@@ -114,23 +107,23 @@ app.get('/faveImage', (req, res) => {
     })
 })
 
-app.get('/images/add', (req, res) => {
-    console.log(req.query.imageUrl)
+app.post('/images/add', (req, res) => {
+    console.log(req.body, 'EEEEEEEEEEEEEEEEEE')
     db.favoritesImages.update({
-        favoritesListImages: sequelize.fn('array_append', sequelize.col('favoritesListImages'), req.query.imageUrl)
+        favoritesListImages: sequelize.fn('array_append', sequelize.col('favoritesListImages'), req.body.imageUrl)
     }, { where: { id: req.user.id } })
         .then
     console.log('BOOOOOOOOOOM')
 
-    res.render('images/add')
+    res.redirect('/faveImage')
 })
 
-app.get('/images/delete', (req,res) => {
-    console.log('AAAAAAAAAAA',req.query.imageUrl)
+app.delete('/images/delete', (req,res) => {
+    console.log('AAAAAAAAAAA',req.body.imageUrl)
     console.log('BBBBBBBBBBB',req.user.id)
     // console.log('DDDDDDDDDDD',currentUser.id)
     let filterArray = function (image) {
-        return image != req.query.imageUrl
+        return image != req.body.imageUrl
     }
     db.favoritesImages.findOne
         ({
@@ -141,7 +134,7 @@ app.get('/images/delete', (req,res) => {
             favorites.update({ favoritesListImages: newFavorites },
                 { where: { id: req.user.id } })
         }).then
-    res.render('images/delete')
+    res.redirect('/faveImage')
 })
 
 app.get('/favorites/add', (req, res) => {
