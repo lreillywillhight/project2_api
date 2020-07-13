@@ -8,6 +8,13 @@
 <body>
     <div class="bodyNews">
         <h1>NEWS SECTION</h1>
+        <div>
+        <%= JSON.stringify(newsFront[0].title) %>
+        <div class="container">
+            <img class="headlineImage" src=<%=newsFront[0].featured_image%> alt="Headline image">
+        </div>
+        <a target="_blank" href=<%=newsFront[0].url%>>Read more at <%=newsFront[0].news_site_long%></a>
+        </div>
         <!-- forEach: !!!
         news
         headline

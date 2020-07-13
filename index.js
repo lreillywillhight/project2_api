@@ -57,8 +57,12 @@ app.use(function (req, res, next) {
 // ROUTES
 
 app.get('/', (req, res) => {
-    // check to see if user is logged in
-    res.render('index', { messages: req.flash('info')})
+    var newsCurrent = 'https://spaceflightnewsapi.net/api/v1/articles'
+    axios.get(newsCurrent).then(apiResponse => {
+        var newsFront = apiResponse.data.docs
+        console.log(newsFront)
+        res.render('index', { newsFront: newsFront })
+    })
 })
 
 app.get('/profile', isLoggedIn, function (req, res) {
@@ -69,71 +73,53 @@ app.get('/news', function (req, res) {
     var newsUrl = 'https://spaceflightnewsapi.net/api/v1/articles'
     axios.get(newsUrl).then(apiResponse => {
         var newsResult = apiResponse.data.docs
-        res.render('newsIndex', {newsResult: newsResult})
+        res.render('newsIndex', { newsResult: newsResult })
     })
 })
 
-app.get('/picOTDay', function(req,res) {
+app.get('/picOTDay', function (req, res) {
     var imgUrl = 'https://apod.nasa.gov/apod/'
     axios.get(imgUrl).then(apiResponse => {
         var imgResult = apiResponse.data
         // console.log(imgResult)
-        res.render('potd', {imgResult: imgResult})
+        res.render('potd', { imgResult: imgResult })
     })
 })
 
-app.get('/upcoming', function(req,res) {
+app.get('/upcoming', function (req, res) {
     var upcomingUrl = 'https://api.spacexdata.com/v4/launches/upcoming'
     axios.get(upcomingUrl).then(apiResponse => {
         var upcomingResult = apiResponse.data
         // console.log(upcomingResult)
-        res.render('upcoming', {upcomingResult: upcomingResult})
+        res.render('upcoming', { upcomingResult: upcomingResult })
     })
 })
 
-app.get('/favorites/add', (req,res) => {
+app.get('/favorites/add', (req, res) => {
     db.favoritesSpaceX.update(
-        {favoritesListSpaceX: sequelize.fn('array_append', sequelize.col('favoritesListSpaceX'), req.query.idx)},
-        {where: {id: req.query.uid}}
+        { favoritesListSpaceX: sequelize.fn('array_append', sequelize.col('favoritesListSpaceX'), req.query.idx) },
+        { where: { id: req.query.uid } }
     ).then
-    console.log('added',db.favoritesSpaceX.findAll({where: {id : 1}}))
+    console.log('added', db.favoritesSpaceX.findAll({ where: { id: 1 } }))
     res.render('favorites/add')
 })
 
-app.get('/favorites/delete', (req,res) => {
-    let filterArray = function(entry) {
+app.get('/favorites/delete', (req, res) => {
+    let filterArray = function (entry) {
         return entry != req.query.idx
     }
-    db.favoritesSpaceX.findOne({where: {id:req.query.uid}}).then(favorites => {
-        newFavorites = favorites.favoritesListSpaceX.filter(filterArray)
-        console.log(newFavorites)
-        favorites.update({favoritesListSpaceX: newFavorites},
-            {where: {id:req.query.uid}})
-    }).then
+    db.favoritesSpaceX.findOne
+        ({
+            where: { id: req.query.uid }
+        }).then(favorites => {
+            let newFavorites = favorites.favoritesListSpaceX.filter(filterArray)
+            console.log(newFavorites)
+            favorites.update({ favoritesListSpaceX: newFavorites },
+                { where: { id: req.query.uid } })
+        }).then
     res.render('favorites/delete')
-    // db.favoritesSpaceX.update(
-    //     newFavorites = favoritesListSpaceX.filter(filterArray)
-    //     {favoritesListSpaceX: newFavorites},
-    //     {where: {id: req.query.uid}}
-    // ).then
-    // console.log('added',db.favoritesSpaceX.findAll({where: {id : 1}}))
-    // res.render('favorites/delete')
 })
 
-
-// app.get('/favorites/delete', (req,res) => {
-//     let newFavorites = []
-//     db.favoritesSpaceX.findOne({where: {id:req.query.uid}}).
-//     then(favorites => {
-//         let filterArray = function(entry) {
-//             return entry != req.query.idx
-//         }
-//         newFavorites = favorites.favoritesListSpaceX.filter(filterArray)
-//         console.log(newFavorites)
-//     }).then(newFaves => {
-
-//     })
-// })
 
 
 // app.get('/', function (req, res) {

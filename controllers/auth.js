@@ -21,6 +21,9 @@ router.post('/register', function (req, res) {
     }).then(function ([user, created]) {
         // if user was created
         if (created) {
+            db.favoritesSpaceX.create({
+                userId: user.id,
+                favoritesListSpaceX: [] })
             console.log("User created! 🎉");
             passport.authenticate('local', {
                 successRedirect: '/profile',
