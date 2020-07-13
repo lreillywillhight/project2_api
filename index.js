@@ -72,6 +72,24 @@ app.get('/news', function (req, res) {
     })
 })
 
+app.get('/picOTDay', function(req,res) {
+    var imgUrl = 'https://apod.nasa.gov/apod/'
+    axios.get(imgUrl).then(apiResponse => {
+        var imgResult = apiResponse.data
+        console.log(imgResult)
+        res.render('potd', {imgResult: imgResult})
+    })
+})
+
+app.get('/upcoming', function(req,res) {
+    var upcomingUrl = 'https://api.spacexdata.com/v4/launches/upcoming'
+    axios.get(upcomingUrl).then(apiResponse => {
+        var upcomingResult = apiResponse.data
+        console.log(upcomingResult)
+        res.render('upcoming', {upcomingResult : upcomingResult})
+    })
+})
+
 // app.get('/', function (req, res) {
 //     res.render('index', { messages: req.flash('info') });
 // })
