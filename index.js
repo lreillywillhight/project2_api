@@ -10,8 +10,7 @@ const passport = require('./config/ppConfig')
 const db = require('./models')
 const isLoggedIn = require('./middleware/isLoggedIn')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
-// const flash = require("connect-flash")
-
+const axios = require('axios')
 // app setup
 const app = Express()
 app.use(Express.urlencoded({ extended: false }))
@@ -65,9 +64,12 @@ app.get('/profile', isLoggedIn, function (req, res) {
     res.render('profile')
 })
 
-app.get('/flash', function (req, res) {
-    req.flash('index', 'Flash is back!')
-    res.redirect('/');
+app.get('/news', function (req, res) {
+    var newsUrl = 'https://spaceflightnewsapi.net/api/v1/articles'
+    axios.get(newsUrl).then(apiResponse => {
+        var newsResult = apiResponse.data.docs
+        res.render('newsIndex', {newsResult: newsResult})
+    })
 })
 
 // app.get('/', function (req, res) {
