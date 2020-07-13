@@ -1,3 +1,7 @@
+body {
+    background-color: thistle;
+}
+
 .sideNav {
     position:fixed;
     width: 20%;
@@ -6,7 +10,7 @@
     top: 0;
     bottom: 0;
     right: 0;
-    background-color: blueviolet;
+    background-color: skyblue;
     overflow-x:hidden;
     overflow-y:auto;
 }
@@ -38,4 +42,13 @@
 .footerImg {
     display:inline;
     margin:0;
+}
+
+.headlineLink {
+    display: inline;
+    padding-right: 50px;
+}
+
+.headlineFollow {
+    display:inline;
 }

@@ -13,15 +13,33 @@
                 <!-- !!! SETTINGS -->
                 <a href="/auth/logout">Logout</a>
                 <a href="/profile">Profile</a>
+                <a href="/">Home</a>
             <% } else { %>
                 <a href="/auth/register">Register</a>
                 <a href="/auth/login">Login</a>
+                <a href="/">Home</a>
             <% } %>
             <!-- !!!
             TITLE
             ABOUT -->
         </nav>
     </header>
+    <div class="sideNav">
+        <h2>NAVIGATE</h2>
+        <a href="/faveNews">Fave News</a>
+        <br><br>
+        <a href="/faveImage">Fave Images</a>
+        <br><br>
+        <a href="/faveSpaceX">Fave SpaceX</a>
+        <br><br>
+        <a href="/manageFaves">View / Manage Faves</a>
+        <br><br>
+        <a href="/upcoming">Upcoming Launches</a>
+        <br><br>
+        <a href="/latest">Latest Launches</a>
+        <br><br>
+        <a href="/profile">View/Edit Profile</a>
+      </div>
     <div class="container">
         <%- body %>
     </div>

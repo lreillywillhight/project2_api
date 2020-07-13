@@ -12,6 +12,7 @@ const isLoggedIn = require('./middleware/isLoggedIn')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const axios = require('axios');
 const { sequelize } = require('./models');
+const { response } = require('express');
 // app setup
 const app = Express()
 app.use(Express.urlencoded({ extended: false }))
@@ -60,7 +61,7 @@ app.get('/', (req, res) => {
     var newsCurrent = 'https://spaceflightnewsapi.net/api/v1/articles'
     axios.get(newsCurrent).then(apiResponse => {
         var newsFront = apiResponse.data.docs
-        console.log(newsFront)
+        // console.log(newsFront)
         res.render('index', { newsFront: newsFront })
     })
 })
@@ -69,22 +70,14 @@ app.get('/profile', isLoggedIn, function (req, res) {
     res.render('profile')
 })
 
-app.get('/faveNews', function (req, res) {
-    var newsUrl = 'https://spaceflightnewsapi.net/api/v1/articles'
-    axios.get(newsUrl).then(apiResponse => {
-        var newsResult = apiResponse.data.docs
-        res.render('newsIndex', { newsResult: newsResult })
-    })
-})
-
-app.get('/picOTDay', function (req, res) {
-    var imgUrl = 'https://apod.nasa.gov/apod/'
-    axios.get(imgUrl).then(apiResponse => {
-        var imgResult = apiResponse.data
-        // console.log(imgResult)
-        res.render('potd', { imgResult: imgResult })
-    })
-})
+// app.get('/picOTDay', function (req, res) {
+//     var imgUrl = 'https://apod.nasa.gov/apod/'
+//     axios.get(imgUrl).then(apiResponse => {
+//         var imgResult = apiResponse.data
+//         // console.log(imgResult)
+//         res.render('potd', { imgResult: imgResult })
+//     })
+// })
 
 app.get('/upcoming', function (req, res) {
     var upcomingUrl = 'https://api.spacexdata.com/v4/launches/upcoming'
@@ -95,13 +88,70 @@ app.get('/upcoming', function (req, res) {
     })
 })
 
+
+app.get('/faveNews', (req, res) => {
+    db.favoritesNews.findOne({
+        where: { userId: req.user.id }
+    }).then(function (favorites) {
+        res.render('faveNews', { favorites: favorites })
+    })
+})
+
+app.get('/faveSpaceX', (req, res) => {
+    db.favoritesSpaceX.findOne({
+        where: { userId: req.user.id }
+    }).then(function (favorites) {
+        res.render('faveSpaceX', { favorites: favorites })
+    })
+})
+
+app.get('/faveImage', (req, res) => {
+    db.favoritesImages.findOne({
+        where: { userId: req.user.id }
+    }).then(function (favorites) {
+        console.log(favorites)
+        res.render('faveImage', { favorites: favorites })
+    })
+})
+
+app.get('/images/add', (req, res) => {
+    console.log(req.query.imageUrl)
+    db.favoritesImages.update({
+        favoritesListImages: sequelize.fn('array_append', sequelize.col('favoritesListImages'), req.query.imageUrl)
+    }, { where: { id: req.user.id } })
+        .then
+    console.log('BOOOOOOOOOOM')
+
+    res.render('images/add')
+})
+
+app.get('/images/delete', (req,res) => {
+    console.log('AAAAAAAAAAA',req.query.imageUrl)
+    console.log('BBBBBBBBBBB',req.user.id)
+    // console.log('DDDDDDDDDDD',currentUser.id)
+    let filterArray = function (image) {
+        return image != req.query.imageUrl
+    }
+    db.favoritesImages.findOne
+        ({
+            where: { id: req.user.id }
+        }).then(favorites => {
+            let newFavorites = favorites.favoritesListImages.filter(filterArray)
+            console.log('CCCCCCCCCCCCCCCCC',newFavorites)
+            favorites.update({ favoritesListImages: newFavorites },
+                { where: { id: req.user.id } })
+        }).then
+    res.render('images/delete')
+})
+
 app.get('/favorites/add', (req, res) => {
     db.favoritesSpaceX.update(
         { favoritesListSpaceX: sequelize.fn('array_append', sequelize.col('favoritesListSpaceX'), req.query.idx) },
         { where: { id: req.query.uid } }
     ).then
-    console.log('added', db.favoritesSpaceX.findAll({ where: { id: 1 } }))
+    console.log('added to favorites')
     res.render('favorites/add')
+
 })
 
 app.get('/favorites/delete', (req, res) => {
@@ -113,7 +163,7 @@ app.get('/favorites/delete', (req, res) => {
             where: { id: req.query.uid }
         }).then(favorites => {
             let newFavorites = favorites.favoritesListSpaceX.filter(filterArray)
-            console.log(newFavorites)
+            // console.log(newFavorites)
             favorites.update({ favoritesListSpaceX: newFavorites },
                 { where: { id: req.query.uid } })
         }).then

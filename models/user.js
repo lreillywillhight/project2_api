@@ -44,6 +44,7 @@ module.exports = function(sequelize, DataTypes) {
         }
     });
     user.associate = function(models) {
+        models.user.hasOne(models.favoritesSpaceX)
         // TODO: any user associations you want
     }
 

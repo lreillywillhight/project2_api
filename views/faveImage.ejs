@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>FaveImage</title>
+    </head>
+    <body>
+        <h1>WORK IN PROGRESS</h1>
+
+        <% favorites.favoritesListImages.forEach(function(image) { %>
+            <br>
+            <img src=<%=image%> alt="space image">
+            <form action="/images/delete" method="get">
+            <label for="deleteImage">Remove this image</label>
+            <input type="hidden" name="imageUrl" value=<%=image%>>
+            <input type="hidden" name="uid" value=currentUser.id>
+            <input type="submit" value="delete image">
+            </form>
+            <br>
+        <% }) %>
+
+        <form action="">
+            <label for="searchText">Search the NASA Image and Video API</label>
+            <input type="text">
+            <input type="submit">
+        </form>
+
+
+        
+</body>
+</html>

@@ -14,13 +14,20 @@
             <h2><%= headline.title %></h2>
           </div>
           <div class="headlineContainer">
-            <img class="headlineImage" src= <%=headline.featured_image%> alt=<%=headline.title%> >
+            <a href=<%=headline.featured_image%>><img class="headlineImage" src= <%=headline.featured_image%> alt=<%=headline.title%>></a>
+          </div>
+          <div class="imageFollow">
+                <form action="/images/add" method="GET">
+                    <input name="imageUrl"
+                    type="hidden" value=<%=headline.featured_image%>>
+                    <input type="submit">
+                </form>
           </div>
           <div class="headlineLink">
             <a target="_blank" href= <%=headline.url%>><h6></h6>Read more at <%=headline.news_site_long%></h6></a>
           </div>
           <div class="headlineFollow">
-              <button></button>
+              <button>Add this article to favorites.</button>
           </div>
           <br>
         </li>
@@ -33,13 +40,13 @@
         content
         link -->
     </div>
-    <div class="sideNav">
+    <!-- <div class="sideNav">
       <h2>NAVIGATE</h2>
       <a href="/faveNews">Fave News</a>
       <br>
       <a href="/">Fave Images</a>
       <br>
-      <a href="/">Fave SpaceX</a>
+      <a href="/faveSpaceX">Fave SpaceX</a>
       <br>
       <a href="/">Manage Faves</a>
       <br>
@@ -50,7 +57,7 @@
       <a href="/">Explore SpaceX API</a>
       <br>
       <a href="/profile">View/Edit Profile</a>
-    </div>
+    </div> -->
     <div class="newsFooter">
       <div class="footerImg">
         <img src="http://www.placekitten.com/100/100" alt="News Footer Image" />
