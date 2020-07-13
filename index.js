@@ -10,7 +10,8 @@ const passport = require('./config/ppConfig')
 const db = require('./models')
 const isLoggedIn = require('./middleware/isLoggedIn')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
-const axios = require('axios')
+const axios = require('axios');
+const { sequelize } = require('./models');
 // app setup
 const app = Express()
 app.use(Express.urlencoded({ extended: false }))
@@ -76,7 +77,7 @@ app.get('/picOTDay', function(req,res) {
     var imgUrl = 'https://apod.nasa.gov/apod/'
     axios.get(imgUrl).then(apiResponse => {
         var imgResult = apiResponse.data
-        console.log(imgResult)
+        // console.log(imgResult)
         res.render('potd', {imgResult: imgResult})
     })
 })
@@ -85,10 +86,55 @@ app.get('/upcoming', function(req,res) {
     var upcomingUrl = 'https://api.spacexdata.com/v4/launches/upcoming'
     axios.get(upcomingUrl).then(apiResponse => {
         var upcomingResult = apiResponse.data
-        console.log(upcomingResult)
-        res.render('upcoming', {upcomingResult : upcomingResult})
+        // console.log(upcomingResult)
+        res.render('upcoming', {upcomingResult: upcomingResult})
     })
 })
+
+app.get('/favorites/add', (req,res) => {
+    db.favoritesSpaceX.update(
+        {favoritesListSpaceX: sequelize.fn('array_append', sequelize.col('favoritesListSpaceX'), req.query.idx)},
+        {where: {id: req.query.uid}}
+    ).then
+    console.log('added',db.favoritesSpaceX.findAll({where: {id : 1}}))
+    res.render('favorites/add')
+})
+
+app.get('/favorites/delete', (req,res) => {
+    let filterArray = function(entry) {
+        return entry != req.query.idx
+    }
+    db.favoritesSpaceX.findOne({where: {id:req.query.uid}}).then(favorites => {
+        newFavorites = favorites.favoritesListSpaceX.filter(filterArray)
+        console.log(newFavorites)
+        favorites.update({favoritesListSpaceX: newFavorites},
+            {where: {id:req.query.uid}})
+    }).then
+    res.render('favorites/delete')
+    // db.favoritesSpaceX.update(
+    //     newFavorites = favoritesListSpaceX.filter(filterArray)
+    //     {favoritesListSpaceX: newFavorites},
+    //     {where: {id: req.query.uid}}
+    // ).then
+    // console.log('added',db.favoritesSpaceX.findAll({where: {id : 1}}))
+    // res.render('favorites/delete')
+})
+
+
+// app.get('/favorites/delete', (req,res) => {
+//     let newFavorites = []
+//     db.favoritesSpaceX.findOne({where: {id:req.query.uid}}).
+//     then(favorites => {
+//         let filterArray = function(entry) {
+//             return entry != req.query.idx
+//         }
+//         newFavorites = favorites.favoritesListSpaceX.filter(filterArray)
+//         console.log(newFavorites)
+//     }).then(newFaves => {
+
+//     })
+// })
+
 
 // app.get('/', function (req, res) {
 //     res.render('index', { messages: req.flash('info') });
