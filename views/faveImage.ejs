@@ -11,7 +11,7 @@
         <% favorites.favoritesListImages.forEach(function(image) { %>
             <br>
             <img src=<%=image%> alt="space image">
-            <form action="/images/delete" method="DELETE">
+            <form action="/images/delete" method="POST">
             <label for="deleteImage">Remove this image</label>
             <input type="hidden" name="imageUrl" value=<%=image%>>
             <input type="hidden" name="uid" value=currentUser.id>

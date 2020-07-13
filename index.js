@@ -118,7 +118,7 @@ app.post('/images/add', (req, res) => {
     res.redirect('/faveImage')
 })
 
-app.delete('/images/delete', (req,res) => {
+app.post('/images/delete', (req,res) => {
     console.log('AAAAAAAAAAA',req.body.imageUrl)
     console.log('BBBBBBBBBBB',req.user.id)
     // console.log('DDDDDDDDDDD',currentUser.id)
