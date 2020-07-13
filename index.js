@@ -69,7 +69,7 @@ app.get('/profile', isLoggedIn, function (req, res) {
     res.render('profile')
 })
 
-app.get('/news', function (req, res) {
+app.get('/faveNews', function (req, res) {
     var newsUrl = 'https://spaceflightnewsapi.net/api/v1/articles'
     axios.get(newsUrl).then(apiResponse => {
         var newsResult = apiResponse.data.docs

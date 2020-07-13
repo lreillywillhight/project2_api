@@ -1,3 +1,41 @@
+.sideNav {
+    position:fixed;
+    width: 20%;
+    height: auto;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-color: blueviolet;
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+
+.bodyNews {
+    width: 80%;
+}
+
+.headlineContainer{
+    display: inline;
+}
+
 .headlineImage {
-    max-height: 150px;
+    max-height: 125px;
+    padding-top: 10px;
+}
+
+.newsFooter {
+    margin: 0;
+    display: inline;
+    position: sticky;
+    bottom: 0;
+    height: 100px;
+    width: auto;
+    left: 20%;
+    background-color:green;
+}
+
+.footerImg {
+    display:inline;
+    margin:0;
 }

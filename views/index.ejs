@@ -1,21 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SpaceX Tracker Homepage</title>
-</head>
-<body>
+  </head>
+  <body>
     <div class="bodyNews">
-        <h1>NEWS SECTION</h1>
-        <div>
-        <%= JSON.stringify(newsFront[0].title) %>
-        <div class="container">
-            <img class="headlineImage" src=<%=newsFront[0].featured_image%> alt="Headline image">
-        </div>
-        <a target="_blank" href=<%=newsFront[0].url%>>Read more at <%=newsFront[0].news_site_long%></a>
-        </div>
-        <!-- forEach: !!!
+      <ul>
+        <% newsFront.forEach(function(headline) { %>
+        <li>
+          <div class="headlineTitle">
+            <h2><%= headline.title %></h2>
+          </div>
+          <div class="headlineContainer">
+            <img class="headlineImage" src= <%=headline.featured_image%> alt=<%=headline.title%> >
+          </div>
+          <div class="headlineLink">
+            <a target="_blank" href= <%=headline.url%>><h6></h6>Read more at <%=headline.news_site_long%></h6></a>
+          </div>
+          <div class="headlineFollow">
+              <button></button>
+          </div>
+          <br>
+        </li>
+        <% }) %>
+      </ul>
+      <!-- forEach: !!!
         news
         headline
         info
@@ -23,22 +34,39 @@
         link -->
     </div>
     <div class="sideNav">
-        SIDEBAR NAV
-        <!-- <div>linkToFavoritesPage</div>
-        forEach: !!!
-        Title/Link
-        Thumbnail
-        News Brief -->
+      <h2>NAVIGATE</h2>
+      <a href="/faveNews">Fave News</a>
+      <br>
+      <a href="/">Fave Images</a>
+      <br>
+      <a href="/">Fave SpaceX</a>
+      <br>
+      <a href="/">Manage Faves</a>
+      <br>
+      <a href="/upcoming">Upcoming Launches</a>
+      <br>
+      <a href="/">Latest Launches</a>
+      <br>
+      <a href="/">Explore SpaceX API</a>
+      <br>
+      <a href="/profile">View/Edit Profile</a>
     </div>
     <div class="newsFooter">
-        <div><img src="http://www.placekitten.com/150/150" alt="News Footer Image"></div>
-        <div><img src="http://www.placekitten.com/150/150" alt="News Footer Image"></div>
-        <div><img src="http://www.placekitten.com/150/150" alt="News Footer Image"></div>
+      <div class="footerImg">
+        <img src="http://www.placekitten.com/100/100" alt="News Footer Image" />
+      </div>
+      <div class="footerImg">
+        <img src="http://www.placekitten.com/100/100" alt="News Footer Image" />
+      </div>
+      <div class="footerImg">
+        <img src="http://www.placekitten.com/100/100" alt="News Footer Image" />
+      </div>
+      <div class="footerImg">
+        <img src="http://www.placekitten.com/100/100" alt="News Footer Image" />
+      </div>
+      <div class="footerImg">
+        <img src="http://www.placekitten.com/100/100" alt="News Footer Image" />
+      </div>
     </div>
-    <div class="sidebarFooter">
-        SIDEBAR FOOTER
-        <!-- !!! -->
-    </div>
-    
-</body>
+  </body>
 </html>
