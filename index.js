@@ -111,7 +111,7 @@ app.post('/images/add', (req, res) => {
     console.log(req.body.imageUrl, 'EEEEEEEEEEEEEEEEEE')
     db.favoritesImages.update({
         favoritesListImages: sequelize.fn('array_append', sequelize.col('favoritesListImages'), req.body.imageUrl)
-    }, { where: { id: req.user.id } })
+    }, { where: { userId: req.user.id } })
         .then
     console.log('FFFFFFFFFFFFF')
 
@@ -126,12 +126,12 @@ app.post('/images/delete', (req,res) => {
     }
     db.favoritesImages.findOne
         ({
-            where: { id: req.user.id }
+            where: { userId: req.user.id }
         }).then(favorites => {
             let newFavorites = favorites.favoritesListImages.filter(filterArray)
             console.log('CCCCCCCCCCCCCCCCC',newFavorites,'CCCCCCCCCCCCCCCCCCCC')
             favorites.update({ favoritesListImages: newFavorites },
-                { where: { id: req.user.id } })
+                { where: { userId: req.user.id } })
         }).then
     res.redirect('/faveImage')
 })
