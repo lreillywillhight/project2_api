@@ -43,9 +43,29 @@ var app = express()
 //     console.log(favoriteNews)
 // })
 
-db.favoritesReddits.create({
-    userId:1,
-    favoritesListReddits: ["https://www.theverge.com/2020/5/30/21269703/spacex-launch-crew-dragon-nasa-orbit-successful", "https://www.reddit.com/r/space/comments/gtzu3r/spacexs_crew_dragon_have_successfully_docked_into/"]
-}).then(favoriteReddits => {
-    console.log(favoriteReddits)
-})
+// db.favoritesReddits.create({
+//     userId:1,
+//     favoritesListReddits: ["https://www.theverge.com/2020/5/30/21269703/spacex-launch-crew-dragon-nasa-orbit-successful", "https://www.reddit.com/r/space/comments/gtzu3r/spacexs_crew_dragon_have_successfully_docked_into/"]
+// }).then(favoriteReddits => {
+//     console.log(favoriteReddits)
+// })
+
+
+const { Client } = require('pg');
+
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
+
+client.connect();
+
+client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
+  if (err) throw err;
+  for (let row of res.rows) {
+    console.log(JSON.stringify(row));
+  }
+  client.end();
+});
