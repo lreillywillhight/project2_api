@@ -62,6 +62,14 @@ body {
     left: 10%;
 }
 
+.deleteButton {
+    background-color: red;
+    -webkit-animation: NAME-YOUR-ANIMATION 1s infinite;
+    -moz-animation: NAME-YOUR-ANIMATION 1s infinite;
+    -o-animation: NAME-YOUR-ANIMATION 1s infinite;  
+    animation: NAME-YOUR-ANIMATION 1s infinite; 
+}
+
 .deleteUserField {
     background-color: red;
     padding: 30px 0;
