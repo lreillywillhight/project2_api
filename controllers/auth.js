@@ -23,7 +23,13 @@ router.post('/register', function (req, res) {
         if (created) {
             db.favoritesSpaceX.create({
                 userId: user.id,
-                favoritesListSpaceX: [] })
+                favoritesListSpaceX: ["5e9e2c5bf35918ed873b2664"] })
+            db.favoritesImages.create({
+                userId: user.id,
+                favoritesListImages: ["https://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/solar_orbiter_artist_impression_20190916_1_0.jpg?itok=N0pFcVjR"] })
+            db.favoritesNews.create({
+                userId: user.id,
+                favoritesListNews: ["https://www.nasa.gov/press-release/nasa-esa-to-release-first-images-from-solar-orbiter-mission"] })
             console.log("User created! 🎉");
             passport.authenticate('local', {
                 successRedirect: '/profile',
