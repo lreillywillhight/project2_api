@@ -119,8 +119,7 @@ app.post('/images/add', (req, res) => {
 })
 
 app.post('/images/delete', (req,res) => {
-    console.log('AAAAAAAAAAA',req.body.imageUrl)
-    console.log('BBBBBBBBBBB',req.user.id)
+    console.log('AAAAAAAAAAA',req.body.imageUrl,req.user.id,'AAAAAAAAA')
     // console.log('DDDDDDDDDDD',currentUser.id)
     let filterArray = function (image) {
         return image != req.body.imageUrl
@@ -130,12 +129,32 @@ app.post('/images/delete', (req,res) => {
             where: { id: req.user.id }
         }).then(favorites => {
             let newFavorites = favorites.favoritesListImages.filter(filterArray)
-            console.log('CCCCCCCCCCCCCCCCC',newFavorites)
+            console.log('CCCCCCCCCCCCCCCCC',newFavorites,'CCCCCCCCCCCCCCCCCCCC')
             favorites.update({ favoritesListImages: newFavorites },
                 { where: { id: req.user.id } })
         }).then
     res.redirect('/faveImage')
 })
+
+
+// DELETE NULL VALUES FROM ARRAY, MOVE TO TESTDB.JS
+// app.post('/images/delete', (req,res) => {
+//     console.log('AAAAAAAAAAA',req.body.imageUrl,req.user.id,'AAAAAAAAA')
+//     // console.log('DDDDDDDDDDD',currentUser.id)
+//     let filterArray = function (image) {
+//         return image != null
+//     }
+//     db.favoritesImages.findOne
+//         ({
+//             where: { id: req.user.id }
+//         }).then(favorites => {
+//             let newFavorites = favorites.favoritesListImages.filter(filterArray)
+//             console.log('CCCCCCCCCCCCCCCCC',newFavorites,'CCCCCCCCCCCCCCCCCCCC')
+//             favorites.update({ favoritesListImages: newFavorites },
+//                 { where: { id: req.user.id } })
+//         }).then
+//     res.redirect('/faveImage')
+// })
 
 app.get('/favorites/add', (req, res) => {
     db.favoritesSpaceX.update(

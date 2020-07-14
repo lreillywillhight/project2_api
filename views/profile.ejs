@@ -1,2 +1,32 @@
-<h2>Hi <%= currentUser.name %> , you are logged in.</h2>
-<h2>your email is <%=currentUser.email%></h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+</head>
+<body>
+    <h2>Hi <%= currentUser.name %> , you are logged in.</h2>
+    <h2>your email is <%=currentUser.email%></h2>
+    
+
+
+    <form class="deleteGate" action="/auth/deleteWarn" method="GET">
+        <label for="gateButton">Head to the account deletion area?</label>
+        <input type="submit" name="toDeletion" id="toDeletion">
+    </form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

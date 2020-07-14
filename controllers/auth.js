@@ -5,6 +5,7 @@ const db = require('../models');
 const flash = require('flash');
 const passport = require("../config/ppConfig");
 
+
 // register get route
 router.get('/register', function (req, res) {
     res.render('auth/register');
@@ -23,13 +24,16 @@ router.post('/register', function (req, res) {
         if (created) {
             db.favoritesSpaceX.create({
                 userId: user.id,
-                favoritesListSpaceX: ["5e9e2c5bf35918ed873b2664"] })
+                favoritesListSpaceX: ["5e9e2c5bf35918ed873b2664"]
+            })
             db.favoritesImages.create({
                 userId: user.id,
-                favoritesListImages: ["https://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/solar_orbiter_artist_impression_20190916_1_0.jpg?itok=N0pFcVjR"] })
+                favoritesListImages: ["https://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/solar_orbiter_artist_impression_20190916_1_0.jpg?itok=N0pFcVjR"]
+            })
             db.favoritesNews.create({
                 userId: user.id,
-                favoritesListNews: ["https://www.nasa.gov/press-release/nasa-esa-to-release-first-images-from-solar-orbiter-mission"] })
+                favoritesListNews: ["https://www.nasa.gov/press-release/nasa-esa-to-release-first-images-from-solar-orbiter-mission"]
+            })
             console.log("User created! 🎉");
             passport.authenticate('local', {
                 successRedirect: '/profile',
@@ -75,6 +79,47 @@ router.post('/login', function (req, res, next) {
             req.session.save(function () {
                 return res.redirect('/profile');
             });
+        })
+    })(req, res, next);
+})
+
+// delete warning page GET
+router.get('/deleteWarn', (req, res) => {
+    res.render('auth/deleteWarn')
+})
+
+// delete GET route
+router.get('/deleteUser', function (req, res) {
+    res.render('auth/deleteUser');
+});
+
+// delete post route
+router.post('/deleteUser', function (req, res, next) {
+    passport.authenticate('local', function (error, user, info) {
+        // if no user authenticated
+        console.log('PPPPPPPPPPPPPPPP', user.id, 'PPPPPPPPPPPPPPPPPPPP')
+        if (!user) {
+            req.flash('error', 'incorrect id/password')
+            // console.log(req.flash('info')) //untested
+            return res.redirect('/auth/deleteWarn');
+        }
+        if (error) {
+            return next(error);
+        }
+
+        req.login(user, function (error) {
+            console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+            // if error move to error
+            if (error) next(error);
+            // if success flash success message
+            console.log('0000000000000000',user,'0000000000000000')
+            user.destroy()
+            // db.users.findOne({ where: { id: user.id } })
+                // .then(userZero => {
+                //     userZero.destroy()
+                        // if success delete user and send to main
+                        res.redirect('/')
+                // })
         })
     })(req, res, next);
 })

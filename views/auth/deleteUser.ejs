@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login page</title>
+  </head>
+  <body>
+    <div class="warningText">
+        <h1>CAUTION DELETING USER</h1>
+    </div>
+    <form class="deleteUserField" action="/auth/deleteUser" method="POST">
+        <h1>REALLY DELETE USER ACCOUNT?</h1>
+      <div class="form-group">
+        <label for="authEmail">Email</label>
+        <input id="authEmail" class="form-control" type="email" name="email" />
+      </div>
+        <label for="authPassword">Password</label>
+        <input
+          id="authPassword"
+          class="form-control"
+          type="password"
+          name="password"
+        />
+        <br>
+        <input type="submit" />
+      </div>
+    </form>
+    <div class="warningText">
+        <h1>CAUTION DELETING USER</h1>
+    </div>
+  </body>
+</html>
