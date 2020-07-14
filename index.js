@@ -108,14 +108,14 @@ app.get('/faveImage', (req, res) => {
 })
 
 app.post('/images/add', (req, res) => {
-    console.log(req.body, 'EEEEEEEEEEEEEEEEEE')
+    console.log(req.body.imageUrl, 'EEEEEEEEEEEEEEEEEE')
     db.favoritesImages.update({
         favoritesListImages: sequelize.fn('array_append', sequelize.col('favoritesListImages'), req.body.imageUrl)
     }, { where: { id: req.user.id } })
         .then
-    console.log('BOOOOOOOOOOM')
+    console.log('FFFFFFFFFFFFF')
 
-    res.redirect('images')
+    res.redirect('/images')
 })
 
 app.post('/images/delete', (req,res) => {
