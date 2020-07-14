@@ -107,10 +107,10 @@ app.get('/faveImage', (req, res) => {
     })
 })
 
-app.post('/images/add', (req, res) => {
-    console.log(req.body, 'EEEEEEEEEEEEEEEEEE')
+app.get('/images/add', (req, res) => {
+    console.log(req.query.id, 'EEEEEEEEEEEEEEEEEE')
     db.favoritesImages.update({
-        favoritesListImages: sequelize.fn('array_append', sequelize.col('favoritesListImages'), req.body.imageUrl)
+        favoritesListImages: sequelize.fn('array_append', sequelize.col('favoritesListImages'), req.query.imageUrl)
     }, { where: { id: req.user.id } })
         .then
     console.log('BOOOOOOOOOOM')
@@ -144,7 +144,6 @@ app.get('/favorites/add', (req, res) => {
     ).then
     console.log('added to favorites')
     res.render('favorites/add')
-
 })
 
 app.get('/favorites/delete', (req, res) => {
