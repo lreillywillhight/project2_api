@@ -102,7 +102,7 @@ app.get('/faveImage', (req, res) => {
     db.favoritesImages.findOne({
         where: { userId: req.user.id }
     }).then(function (favorites) {
-        console.log(favorites)
+        console.log("QQQQQQQQQQQQQQQQQQQQQQQQQ",favorites)
         res.render('faveImage', { favorites: favorites })
     })
 })
