@@ -115,7 +115,7 @@ app.post('/images/add', (req, res) => {
         .then
     console.log('FFFFFFFFFFFFF')
 
-    res.redirect('/images')
+    res.redirect('/faveImage')
 })
 
 app.post('/images/delete', (req,res) => {
