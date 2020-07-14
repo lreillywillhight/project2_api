@@ -103,7 +103,7 @@ app.get('/faveImage', (req, res) => {
         where: { userId: req.user.id }
     }).then(function (favorites) {
         console.log("QQQQQQQQQQQQQQQQQQQQQQQQQ",favorites.dataValues)
-        res.render('faveImage', { favorites: favorites })
+        res.render('faveImage', { favorites: favorites.dataValues })
     })
 })
 
