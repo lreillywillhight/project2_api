@@ -115,7 +115,7 @@ app.get('/images/add', (req, res) => {
         .then
     console.log('BOOOOOOOOOOM')
 
-    res.render('/faveImage')
+    res.render('images/add')
 })
 
 app.post('/images/delete', (req,res) => {
